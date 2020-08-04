@@ -27,28 +27,36 @@ public class CellScript1 : MonoBehaviour
                                    {0,0,0,0,0,0,0,0,0},
                                    {0,0,0,0,0,0,0,0,0},};
 
-    HashSet<Tuple<int, int>> fixedValues;
+    public HashSet<Tuple<int, int>> fixedValues;
     bool up, down, left, right;
 
-    //void Start()
-    //{
-        //fixedValues = new HashSet<Tuple<int, int>>();
+    public void LoadSavedPuzzle(int[,] savedSudokuPuzzle, HashSet<Tuple<int, int>> savedFixedValues, int[,] originalPuzzle)
+    {
+        UnHighlightBox();
+        selected = false;
+        value = false;
+        selectedTextbox = null;
+        selectedIndex = null;
+        selectedBox = null;
+        fixedValues = savedFixedValues;
 
-        //for(int i = 0; i < 9; i++)
-        //{
-        //    for (int j = 0; j < 9; j++)
-        //    {
-        //        puzzleManager.numbersInPuzzle[i, j] = model[i,j];
-        //        if (model[i,j] != 0)
-        //        {
-        //            EnterPreDefinedValues(model[i, j], Convert.ToString(i)+Convert.ToString(j));
-        //            fixedValues.Add(new Tuple<int, int>(i, j));
-        //        }
-        //    }
-        //}
-        //Debug.Log($"Index 2 in script: {puzzleManager.numbersInPuzzle[0, 1]}");
-        //puzzleManager.SolvePuzzle(model);
-    //}
+        for(int i = 0; i < 9; i++)
+        {
+            for(int j = 0; j < 9; j++)
+            {
+                model[i, j] = savedSudokuPuzzle[i, j];
+                if(fixedValues.Contains(new Tuple<int,int>(i , j)))
+                {
+                    EnterPreDefinedValues(savedSudokuPuzzle[i, j], $"{i}{j}");
+                }
+                else if(savedSudokuPuzzle[i,j] != 0)
+                {
+                    mainCanvas.transform.Find($"{i}{j}").GetComponent<Text>().text = $"{savedSudokuPuzzle[i, j]}";
+                }
+            }
+        }
+        puzzleManager.SolvePuzzle(originalPuzzle);
+    }
 
     public void LoadPuzzle(int[,] sudokuPuzzle)
     {
@@ -59,6 +67,8 @@ public class CellScript1 : MonoBehaviour
         selectedIndex = null;
         selectedBox = null;
         fixedValues = new HashSet<Tuple<int, int>>();
+
+        Debug.Log($"In LoadPuzzle: {puzzleManager.numbersInPuzzle[0, 4]}");
 
         for (int i = 0; i < 9; i++)
         {
