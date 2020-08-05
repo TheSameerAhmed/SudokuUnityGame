@@ -10,6 +10,7 @@ using TMPro;
 public class PuzzleManager : MonoBehaviour
 {
     [SerializeField] Timer timer;
+    [SerializeField] AnimationManager animationManager;
     public int[,] numbersInPuzzle = new int[9,9];
 
     public int[,] derivedSolution = new int[9, 9];
@@ -56,7 +57,7 @@ public class PuzzleManager : MonoBehaviour
 
     public bool SolvePuzzle(int[,] findSolution)
     {
-        derivedSolution = findSolution;
+        derivedSolution = (int[,]) findSolution.Clone();
         Tuple<int, int> EmptyBox = FindEmptySpace();
 
         if (EmptyBox == null)
@@ -97,6 +98,7 @@ public class PuzzleManager : MonoBehaviour
         }
         Debug.Log("Validated.");
         timer.StopTimer();
+        animationManager.PuzzleCompleted();
         return;
     }
 
