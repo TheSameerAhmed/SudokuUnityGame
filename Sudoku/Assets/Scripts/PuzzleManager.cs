@@ -11,6 +11,7 @@ public class PuzzleManager : MonoBehaviour
 {
     [SerializeField] Timer timer;
     [SerializeField] AnimationManager animationManager;
+    [SerializeField] NextAndPrevious nextAndPrevious;
     public int[,] numbersInPuzzle = new int[9,9];
 
     public int[,] derivedSolution = new int[9, 9];
@@ -91,6 +92,8 @@ public class PuzzleManager : MonoBehaviour
                 if (derivedSolution[i, j] != numbersInPuzzle[i, j])
                 {
                     Debug.Log("False in Validate");
+                    animationManager.PuzzleNotCompleted();
+                    nextAndPrevious.savedValidationState[nextAndPrevious.index] = false;
                     return;
                 }
                     
@@ -99,6 +102,7 @@ public class PuzzleManager : MonoBehaviour
         Debug.Log("Validated.");
         timer.StopTimer();
         animationManager.PuzzleCompleted();
+        nextAndPrevious.savedValidationState[nextAndPrevious.index] = true;
         return;
     }
 

@@ -100,18 +100,12 @@ public class CellScript1 : MonoBehaviour
 
             if(hitCollider != null)
             {
-                //Debug.Log(hitCollider.name);
-
                 selectedTextbox = mainCanvas.transform.Find(hitCollider.gameObject.tag).GetComponent<Text>();                
-
                 selectedIndex = hitCollider.gameObject.tag;
                 UnHighlightBox();
                 selectedBox = hitCollider.gameObject;
                 HighlightSelectedBox();
-               
-                //Debug.Log($"{hitCollider.gameObject.tag} inside Update ");
             }
-            //Debug.Log("Pressed left click");
         }
 
         up = Input.GetKeyUp(KeyCode.UpArrow);
@@ -141,7 +135,6 @@ public class CellScript1 : MonoBehaviour
             {
                 KeyBoardControls();
             }
-
         }
 
         if (selected)
@@ -203,12 +196,9 @@ public class CellScript1 : MonoBehaviour
         if (selectedTextbox != null && !fixedValues.Contains(toCheck))
         {
             Debug.Log($"Pressed {toEnter}");
-
             selectedTextbox.text = toEnter.ToString();
             puzzleManager.InsertValue(selectedIndex, toEnter);
-
-            //selectedIndex = null; 
-            selected = false;
+            selected = true;
             value = false;
         }
     }
@@ -218,18 +208,16 @@ public class CellScript1 : MonoBehaviour
         Tuple<int, int> toCheck = new Tuple<int, int>(Convert.ToInt32(selectedIndex.Substring(0, 1)), Convert.ToInt32(selectedIndex.Substring(1, 1)));
         if (selectedTextbox != null && !fixedValues.Contains(toCheck))
         {
-            //Debug.Log("Delete");
             selectedTextbox.text = "";
-            selected = false;
-            selectedTextbox = null;
+            //selected = false;
+            //selectedTextbox = null;
             puzzleManager.DeleteValue(selectedIndex);
-            selectedIndex = null;
+            //selectedIndex = null;
         }
     }
 
     void EnterPreDefinedValues(int toEnter, string index)
     {
-        Debug.Log("Entered predefined");
         selectedTextbox = mainCanvas.transform.Find(index).GetComponent<Text>();
         selectedTextbox.text = toEnter.ToString();
         selectedTextbox.color = new Color(0.61f, 0.66f, 0.7f);
@@ -240,9 +228,7 @@ public class CellScript1 : MonoBehaviour
     void UnHighlightBox()
     {
         if (selectedBox != null)
-        {
-            selectedBox.GetComponent<SpriteRenderer>().color = Color.black;
-        }
+           selectedBox.GetComponent<SpriteRenderer>().color = Color.black;
     }
 
     void HighlightSelectedBox()
@@ -409,4 +395,30 @@ public class CellScript1 : MonoBehaviour
         }
     }
 
-}
+    public void LockCompletedPuzzle()
+    {
+        UnHighlightBox();
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                fixedValues.Add(new Tuple<int, int>(i, j));
+                mainCanvas.transform.Find($"{i}{j}").GetComponent<Text>().color = Color.green;
+            }
+
+        }
+    }
+
+    public void LoadCompletedPuzzle()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                mainCanvas.transform.Find($"{i}{j}").GetComponent<Text>().color = Color.green;
+            }
+
+        }
+    }
+
+    }
