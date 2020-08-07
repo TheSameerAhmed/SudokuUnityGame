@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     [SerializeField] Text timerText;
-    float time;
+    public float time;
 
     void Start()
     {
@@ -33,5 +33,20 @@ public class Timer : MonoBehaviour
     public void StopTimer()
     {
         enabled = false;
+    }
+
+    public void TurnOnTimer()
+    {
+        enabled = true;
+    }
+
+    public void DisplaySavedTime(float savedTime)
+    {
+        enabled = false;
+
+        var minutes = savedTime / 60;
+        var seconds = savedTime % 60;
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        
     }
 }

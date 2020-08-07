@@ -14,7 +14,8 @@ public class NextAndPrevious : MonoBehaviour
     [SerializeField] TextMeshProUGUI puzzleCountText;
     [SerializeField] GameObject nextPuzzleButton;
     [SerializeField] GameObject previousPuzzleButton;
-
+    [SerializeField] BestTimes bestTimes;
+ 
     public int index { get; set; } = 0;
     
     
@@ -47,7 +48,8 @@ public class NextAndPrevious : MonoBehaviour
                                    {7,1,3,9,2,4,8,5,6},
                                    {9,6,1,5,3,7,2,8,4},
                                    {2,8,7,4,1,9,6,0,5},
-                                   {3,4,5,2,8,6,0,7,9},};
+                                   {3,4,5,2,8,6,0,7,9},}; // 3,1
+
 
     int[,] model1 = new int[9, 9] { {3,4,6,8,9,1,5,7,2},
                                    {2,9,1,7,3,5,6,8,4},
@@ -57,49 +59,79 @@ public class NextAndPrevious : MonoBehaviour
                                    {7,1,2,6,5,8,4,3,9},
                                    {1,3,7,5,4,9,2,6,8},
                                    {9,2,4,0,8,0,7,1,5},
-                                   {6,8,5,1,2,7,0,0,3},};
+                                   {6,8,5,1,2,7,0,0,3},}; // 3 6, 9 4
+
+    int[,] model2 = new int[9, 9] { {7,4,0,0,3,0,0,1,0},
+                                   {0,1,9,0,6,8,5,0,2},
+                                   {0,0,0,0,0,4,3,0,0},
+                                   {0,5,6,3,7,0,0,0,1},
+                                   {0,0,1,8,0,0,0,9,5},
+                                   {0,9,0,0,2,0,6,0,0},
+                                   {1,0,3,4,0,7,2,0,0},
+                                   {5,0,0,2,0,0,0,0,8},
+                                   {0,8,0,0,0,1,4,7,0},}; // 3,1
 
 
     List<bool> modifiedPuzzlesMap = new List<bool>();
     List<int[,]> savedStatesOfModifiedPuzzles = new List<int[,]>();
     List<HashSet<Tuple<int, int>>> savedFixedValues = new List<HashSet<Tuple<int, int>>>();
+    List<float> latestSavedTimes = new List<float>();
+    List<float[]> bestTimesSaved = new List<float[]>();
+
+    public List<float> latestSavedTimesOfCompletedPuzzles = new List<float>();
     public List<bool> savedValidationState = new List<bool>();
 
     void Awake()
     {
+        InitializeLists();
         AllPuzzles.Add(model);
         AllPuzzles.Add(model1);
-        modifiedPuzzlesMap.Add(false);
-        modifiedPuzzlesMap.Add(false);
-        savedValidationState.Add(false);
-        savedValidationState.Add(false);
-        savedStatesOfModifiedPuzzles.Add(new int[9, 9]);
-        savedStatesOfModifiedPuzzles.Add(new int[9, 9]);
-        savedFixedValues.Add(new HashSet<Tuple<int, int>>());
-        savedFixedValues.Add(new HashSet<Tuple<int, int>>());
+        AllPuzzles.Add(model2);
+
         cells.LoadPuzzle(AllPuzzles[index]);
         UpdatePuzzleCount();
+    }
+
+    void InitializeLists()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            modifiedPuzzlesMap.Add(false);
+            savedValidationState.Add(false);
+            savedStatesOfModifiedPuzzles.Add(new int[9, 9]);
+            savedFixedValues.Add(new HashSet<Tuple<int, int>>());
+            latestSavedTimes.Add(0f);
+            latestSavedTimesOfCompletedPuzzles.Add(0f);
+            bestTimesSaved.Add(new float[3]);
+        }
     }
     void UpdatePuzzleCount()
     {
         if (index == 0)
         {
-            previousPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.black;
+            previousPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
             previousPuzzleButton.GetComponent<Button>().enabled = false;
             if (AllPuzzles.Count > 1)
             {
-                nextPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
+                nextPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0f,0.08235294f, 0.2352941f,1f);
                 nextPuzzleButton.GetComponent<Button>().enabled = true;
             }
         }
         else if(index == AllPuzzles.Count - 1)
         {
             previousPuzzleButton.GetComponent<Button>().enabled = true;
-            previousPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
-            nextPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.black;
+            previousPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0f, 0.08235294f, 0.2352941f, 1f);
+            nextPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
             nextPuzzleButton.GetComponent<Button>().enabled = false;
         }
-        puzzleCountText.text = $"{index + 1} / {AllPuzzles.Count}";
+        else
+        {
+            previousPuzzleButton.GetComponent<Button>().enabled = true;
+            previousPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0f, 0.08235294f, 0.2352941f, 1f);
+            nextPuzzleButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0f, 0.08235294f, 0.2352941f, 1f);
+            nextPuzzleButton.GetComponent<Button>().enabled = true;
+        }
+        puzzleCountText.text = $"{index + 1}/{AllPuzzles.Count}";
     }
 
     public void NextPuzzle()
@@ -107,6 +139,10 @@ public class NextAndPrevious : MonoBehaviour
         
         savedStatesOfModifiedPuzzles[index] = puzzleManager.numbersInPuzzle;
         modifiedPuzzlesMap[index] = true;
+        latestSavedTimes[index] = timer.time;
+
+        for (int j = 0; j < 3; j++)
+            bestTimesSaved[index][j] = bestTimes.timings[j];
 
         savedFixedValues[index] = cells.fixedValues;
         cells.WipePuzzleForNew();
@@ -115,21 +151,35 @@ public class NextAndPrevious : MonoBehaviour
         {
             puzzleManager.numbersInPuzzle = new int[9, 9];
             cells.LoadPuzzle(AllPuzzles[index]);
+            timer.RestartTimer();
+            bestTimes.ClearStandings();
+            puzzleManager.isValidated = false;
+            UpdatePuzzleCount();
 
         }
         else if(savedValidationState[index])
         {
             cells.LoadSavedPuzzle(savedStatesOfModifiedPuzzles[index], savedFixedValues[index], AllPuzzles[index]);
             cells.LoadCompletedPuzzle();
+            bestTimes.LoadStandings(bestTimesSaved[index]);
             puzzleManager.numbersInPuzzle = savedStatesOfModifiedPuzzles[index];
+            UpdatePuzzleCount();
+            timer.DisplaySavedTime(latestSavedTimesOfCompletedPuzzles[index]);
+            puzzleManager.isValidated = true;
+            
+            return;
         }
         else
         {
             puzzleManager.numbersInPuzzle = savedStatesOfModifiedPuzzles[index];
             cells.LoadSavedPuzzle(savedStatesOfModifiedPuzzles[index], savedFixedValues[index], AllPuzzles[index]);
+            timer.time = latestSavedTimes[index];
+            bestTimes.LoadStandings(bestTimesSaved[index]);
+            timer.TurnOnTimer();
+            UpdatePuzzleCount();
+            puzzleManager.isValidated = false;
         }
-        timer.RestartTimer();
-        UpdatePuzzleCount();
+
     }
 
 
@@ -137,10 +187,11 @@ public class NextAndPrevious : MonoBehaviour
     {
         savedStatesOfModifiedPuzzles[index] = puzzleManager.numbersInPuzzle;
         modifiedPuzzlesMap[index] = true;
-        //if (puzzleManager.isValidate())
-        //{
-        //    savedValidationState[index] = true;
-        //}
+        latestSavedTimes[index] = timer.time;
+
+        for (int j = 0; j < 3; j++)
+            bestTimesSaved[index][j] = bestTimes.timings[j];
+
         savedFixedValues[index] = cells.fixedValues;
         index--;
         cells.WipePuzzleForNew();
@@ -149,26 +200,43 @@ public class NextAndPrevious : MonoBehaviour
         {
             puzzleManager.numbersInPuzzle = new int[9, 9];
             cells.LoadPuzzle(AllPuzzles[index]);
+            timer.RestartTimer();
+            bestTimes.ClearStandings();
+            puzzleManager.isValidated = false;
+            UpdatePuzzleCount();
         }
         else if(savedValidationState[index])
         {
             cells.LoadSavedPuzzle(savedStatesOfModifiedPuzzles[index], savedFixedValues[index], AllPuzzles[index]);
             cells.LoadCompletedPuzzle();
             puzzleManager.numbersInPuzzle = savedStatesOfModifiedPuzzles[index];
+            UpdatePuzzleCount();
+            timer.DisplaySavedTime(latestSavedTimesOfCompletedPuzzles[index]);
+            bestTimes.LoadStandings(bestTimesSaved[index]);
+            puzzleManager.isValidated = true;
+
+            Debug.Log($"{latestSavedTimesOfCompletedPuzzles[index]} time inside the list inside PreviousPuzzle");
+            return;
         }
         else
         {
             puzzleManager.numbersInPuzzle = savedStatesOfModifiedPuzzles[index];
             cells.LoadSavedPuzzle(savedStatesOfModifiedPuzzles[index], savedFixedValues[index], AllPuzzles[index]);
+            timer.time = latestSavedTimes[index];
+            timer.TurnOnTimer();
+            bestTimes.LoadStandings(bestTimesSaved[index]);
+            UpdatePuzzleCount();
+            puzzleManager.isValidated = false;
         }
-        timer.RestartTimer();
-        UpdatePuzzleCount();
+
     }
 
     public void ResetButton()
     {
         modifiedPuzzlesMap[index] = false;
         savedValidationState[index] = false;
+        latestSavedTimesOfCompletedPuzzles[index] = 0f;
+        latestSavedTimes[index] = 0f;
         cells.WipePuzzleForNew();
         puzzleManager.numbersInPuzzle = new int[9, 9];
         savedStatesOfModifiedPuzzles[index] = (int[,]) AllPuzzles[index].Clone();
@@ -196,6 +264,8 @@ public class NextAndPrevious : MonoBehaviour
         {
             modifiedPuzzlesMap[j] = false;
             savedValidationState[j] = false;
+            latestSavedTimesOfCompletedPuzzles[index] = 0f;
+            latestSavedTimes[index] = 0f;
         }
 
         for(int j = 0; j < AllPuzzles.Count; j++)

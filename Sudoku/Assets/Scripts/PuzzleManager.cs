@@ -12,9 +12,12 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField] Timer timer;
     [SerializeField] AnimationManager animationManager;
     [SerializeField] NextAndPrevious nextAndPrevious;
+    [SerializeField] BestTimes bestTimes;
+
     public int[,] numbersInPuzzle = new int[9,9];
 
     public int[,] derivedSolution = new int[9, 9];
+    public bool isValidated = false;
 
     public void InsertValue(string index, int value)
     {
@@ -85,25 +88,32 @@ public class PuzzleManager : MonoBehaviour
 
     public void Validate()
     {
-        for(int i = 0; i < 9; i++)
+        if (!isValidated)
         {
-            for(int j = 0; j < 9; j++)
+            for (int i = 0; i < 9; i++)
             {
-                if (derivedSolution[i, j] != numbersInPuzzle[i, j])
+                for (int j = 0; j < 9; j++)
                 {
-                    Debug.Log("False in Validate");
-                    animationManager.PuzzleNotCompleted();
-                    nextAndPrevious.savedValidationState[nextAndPrevious.index] = false;
-                    return;
+                    if (derivedSolution[i, j] != numbersInPuzzle[i, j])
+                    {
+                        Debug.Log("False in Validate");
+                        animationManager.PuzzleNotCompleted();
+                        nextAndPrevious.savedValidationState[nextAndPrevious.index] = false;
+                        return;
+                    }
+
                 }
-                    
             }
+            Debug.Log("Validated.");
+            timer.StopTimer();
+            bestTimes.SetPlaces(timer.time);
+            nextAndPrevious.latestSavedTimesOfCompletedPuzzles[nextAndPrevious.index] = timer.time;
+            Debug.Log($"{nextAndPrevious.latestSavedTimesOfCompletedPuzzles[nextAndPrevious.index]} isActiveAndEnabled time saved inside Validate");
+            animationManager.PuzzleCompleted();
+            nextAndPrevious.savedValidationState[nextAndPrevious.index] = true;
+            isValidated = true;
+            return;
         }
-        Debug.Log("Validated.");
-        timer.StopTimer();
-        animationManager.PuzzleCompleted();
-        nextAndPrevious.savedValidationState[nextAndPrevious.index] = true;
-        return;
     }
 
     Tuple<int, int> FindEmptySpace()
