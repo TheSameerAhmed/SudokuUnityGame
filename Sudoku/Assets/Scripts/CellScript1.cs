@@ -228,14 +228,16 @@ public class CellScript1 : MonoBehaviour
     void UnHighlightBox()
     {
         if (selectedBox != null)
-           selectedBox.GetComponent<SpriteRenderer>().color = Color.black;
+          selectedBox.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        
     }
 
     void HighlightSelectedBox()
     {
         Tuple<int, int> toCheck = new Tuple<int, int>(Convert.ToInt32(selectedBox.tag.Substring(0, 1)), Convert.ToInt32(selectedBox.tag.Substring(1, 1)));
         if (!fixedValues.Contains(toCheck))
-            selectedBox.GetComponent<SpriteRenderer>().color = Color.red;
+            selectedBox.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(0.745283f, 0.745283f, 0.745283f,1f);
+            
     }
 
     void KeyBoardControls()

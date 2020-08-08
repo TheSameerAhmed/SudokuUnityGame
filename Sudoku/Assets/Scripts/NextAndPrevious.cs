@@ -5,6 +5,7 @@ using TMPro;
 using System;
 using System.Linq;
 using UnityEngine.UI;
+using System.IO;
 
 public class NextAndPrevious : MonoBehaviour
 {
@@ -15,11 +16,13 @@ public class NextAndPrevious : MonoBehaviour
     [SerializeField] GameObject nextPuzzleButton;
     [SerializeField] GameObject previousPuzzleButton;
     [SerializeField] BestTimes bestTimes;
+
+    public int difficulty { get; set; } // 1 is for easy, 2 for medium, 3 for hard
  
     public int index { get; set; } = 0;
     
     
-    readonly List<int[,]> AllPuzzles = new List<int[,]>();
+    List<int[,]> AllPuzzles = new List<int[,]>();       // This was "Read Only" until I made DownloadSudoku class
     //int[,] model = new int[9, 9] { {5,3,0,0,7,0,0,0,0},
     //                               {6,0,0,1,9,5,0,0,0},
     //                               {0,9,8,0,0,0,0,6,0},
@@ -71,6 +74,18 @@ public class NextAndPrevious : MonoBehaviour
                                    {5,0,0,2,0,0,0,0,8},
                                    {0,8,0,0,0,1,4,7,0},}; // 3,1
 
+    int[,] model99 = new int[9, 9] { {5,0,4,0,1,8,0,0,0},
+                                     {0,0,3,9,0,0,1,0,0},
+                                     {0,1,8,0,0,3,2,5,7},
+                                     {0,4,0,0,0,1,0,0,0},
+                                     {8,0,0,0,0,0,0,0,6},
+                                     {0,0,0,8,0,0,0,1,0},
+                                     {2,3,6,7,0,0,5,4,0},
+                                     {0,0,5,0,0,6,8,0,0},
+                                     {0,0,0,5,2,0,6,0,3},}; // 3,1
+
+
+
 
     List<bool> modifiedPuzzlesMap = new List<bool>();
     List<int[,]> savedStatesOfModifiedPuzzles = new List<int[,]>();
@@ -81,20 +96,25 @@ public class NextAndPrevious : MonoBehaviour
     public List<float> latestSavedTimesOfCompletedPuzzles = new List<float>();
     public List<bool> savedValidationState = new List<bool>();
 
-    void Awake()
-    {
-        InitializeLists();
-        AllPuzzles.Add(model);
-        AllPuzzles.Add(model1);
-        AllPuzzles.Add(model2);
 
+    public void DisplayPuzzle()
+    {
+        if (difficulty == 1)
+            AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Easy.txt");
+        else if (difficulty == 2)
+            AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Medium.txt");
+        else if (difficulty == 3)
+            AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Hard.txt");
+        
+        InitializeLists();
         cells.LoadPuzzle(AllPuzzles[index]);
         UpdatePuzzleCount();
     }
 
+
     void InitializeLists()
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < AllPuzzles.Count; i++)
         {
             modifiedPuzzlesMap.Add(false);
             savedValidationState.Add(false);
@@ -132,6 +152,7 @@ public class NextAndPrevious : MonoBehaviour
             nextPuzzleButton.GetComponent<Button>().enabled = true;
         }
         puzzleCountText.text = $"{index + 1}/{AllPuzzles.Count}";
+        Debug.Log(Path.GetFullPath("Resources"));
     }
 
     public void NextPuzzle()
