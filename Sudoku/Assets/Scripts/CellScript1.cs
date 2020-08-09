@@ -236,7 +236,10 @@ public class CellScript1 : MonoBehaviour
     {
         Tuple<int, int> toCheck = new Tuple<int, int>(Convert.ToInt32(selectedBox.tag.Substring(0, 1)), Convert.ToInt32(selectedBox.tag.Substring(1, 1)));
         if (!fixedValues.Contains(toCheck))
-            selectedBox.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(0.745283f, 0.745283f, 0.745283f,1f);
+        {
+            selectedBox.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(0.745283f, 0.745283f, 0.745283f, 1f);
+            AudioManager.instance.Play("NextBox");
+        }
             
     }
 

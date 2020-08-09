@@ -7,18 +7,20 @@ public class AnimationManager : MonoBehaviour
 
     [SerializeField] GameObject puzzleCompleteAnimation;
     [SerializeField] GameObject puzzleInCompleteAnimation;
-    [SerializeField] CellScript1 cells;
+    [SerializeField] CellScript1 cells;    
 
     public void PuzzleCompleted()
     {
-        puzzleCompleteAnimation.SetActive(true);
+        puzzleCompleteAnimation.SetActive(true);        
+        AudioManager.instance.Play("Solved");
         cells.LockCompletedPuzzle();
         Invoke("EndAnimation", 3f);
     }
 
     public void PuzzleNotCompleted()
     {
-        puzzleInCompleteAnimation.SetActive(true);
+        puzzleInCompleteAnimation.SetActive(true);        
+        AudioManager.instance.Play("NotSolved");
         Invoke("EndInCompleteAnimation", 0.5f);
     }
 

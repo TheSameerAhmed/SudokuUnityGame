@@ -10,4 +10,9 @@ public class GoToMainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void PlayButton()
+    {
+        AudioManager.instance.PlayButtonClick();
+    }
 }

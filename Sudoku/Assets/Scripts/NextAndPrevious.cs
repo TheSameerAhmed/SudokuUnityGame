@@ -13,6 +13,7 @@ public class NextAndPrevious : MonoBehaviour
     [SerializeField] Timer timer;
     [SerializeField] PuzzleManager puzzleManager;
     [SerializeField] TextMeshProUGUI puzzleCountText;
+    [SerializeField] TextMeshProUGUI difficultyText;
     [SerializeField] GameObject nextPuzzleButton;
     [SerializeField] GameObject previousPuzzleButton;
     [SerializeField] BestTimes bestTimes;
@@ -23,25 +24,6 @@ public class NextAndPrevious : MonoBehaviour
     
     
     List<int[,]> AllPuzzles = new List<int[,]>();       // This was "Read Only" until I made DownloadSudoku class
-    //int[,] model = new int[9, 9] { {5,3,0,0,7,0,0,0,0},
-    //                               {6,0,0,1,9,5,0,0,0},
-    //                               {0,9,8,0,0,0,0,6,0},
-    //                               {8,0,0,0,6,0,0,0,3},
-    //                               {4,0,0,8,0,3,0,0,1},
-    //                               {7,0,0,0,2,0,0,0,6},
-    //                               {0,6,0,0,0,0,2,8,0},
-    //                               {0,0,0,4,1,9,0,0,5},
-    //                               {0,0,0,0,8,0,0,7,9},};
-
-    //int[,] model1 = new int[9, 9] { {3,0,0,8,0,1,0,0,2},
-    //                               {2,0,1,0,3,0,6,0,4},
-    //                               {0,0,0,2,0,4,0,0,0},
-    //                               {8,0,9,0,0,0,1,0,6},
-    //                               {0,6,0,0,0,0,0,5,0},
-    //                               {7,0,2,0,0,0,4,0,9},
-    //                               {0,0,0,5,0,9,0,0,0},
-    //                               {9,0,4,0,8,0,7,0,5},
-    //                               {6,0,0,1,0,7,0,0,3},};
 
     int[,] model = new int[9, 9] { {5,3,4,6,7,8,9,1,2},
                                    {6,7,2,1,9,5,3,4,8},
@@ -100,12 +82,21 @@ public class NextAndPrevious : MonoBehaviour
     public void DisplayPuzzle()
     {
         if (difficulty == 1)
+        {
             AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Easy.txt");
+            difficultyText.text = "Easy";
+        }
         else if (difficulty == 2)
+        {
             AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Medium.txt");
+            difficultyText.text = "Medium";
+        }
         else if (difficulty == 3)
+        {
             AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Hard.txt");
-        
+            difficultyText.text = "Hard";
+        }
+
         InitializeLists();
         cells.LoadPuzzle(AllPuzzles[index]);
         UpdatePuzzleCount();

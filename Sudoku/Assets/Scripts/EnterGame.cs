@@ -7,8 +7,13 @@ public class EnterGame : MonoBehaviour
 {
     
     public void PlayGame()
-    {
+    {                
         SceneManager.LoadScene(1);
+    }
+
+    public void ButtonClick()
+    {
+        AudioManager.instance.PlayButtonClick();
     }
 
 
