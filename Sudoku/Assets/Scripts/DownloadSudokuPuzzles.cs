@@ -10,7 +10,8 @@ public static class DownloadSudokuPuzzles
     public static List<int[,]> ParsePuzzles(string fileName)
     {
         List<int[,]> output = new List<int[,]>();
-        string[] rows = File.ReadAllLines($@"{Path.GetFullPath("Assets")}\Resources\SavedPuzzles\{fileName}");
+
+        string[] rows = File.ReadAllLines($@"{Application.streamingAssetsPath}/SavedPuzzles/{fileName}");
 
         int last = 0;
         int n = 0;
@@ -38,7 +39,6 @@ public static class DownloadSudokuPuzzles
             }
             n++;
         }
-
         return output;
     }
 

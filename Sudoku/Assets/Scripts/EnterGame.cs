@@ -16,5 +16,8 @@ public class EnterGame : MonoBehaviour
         AudioManager.instance.PlayButtonClick();
     }
 
-
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

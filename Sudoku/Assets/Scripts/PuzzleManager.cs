@@ -21,13 +21,12 @@ public class PuzzleManager : MonoBehaviour
 
     public void InsertValue(string index, int value)
     {
-        //Debug.Log("Entered Insert");
         int row = Convert.ToInt32(index.Substring(0, 1));
         int column = Convert.ToInt32(index.Substring(1, 1));
 
         numbersInPuzzle[row,column] = value;
 
-        PrintValue();
+        // PrintValue(); Debugging Method
     }
 
     public void DeleteValue(string index)
@@ -37,9 +36,12 @@ public class PuzzleManager : MonoBehaviour
 
         numbersInPuzzle[row,column] = 0;
 
-        PrintValue();
+        // PrintValue(); Debugging method
     }
 
+    /// <summary>
+    /// Debugging method
+    /// </summary>
     void PrintValue()
     {
         StringBuilder sb = new StringBuilder();
@@ -64,11 +66,9 @@ public class PuzzleManager : MonoBehaviour
         derivedSolution = (int[,]) findSolution.Clone();
         Tuple<int, int> EmptyBox = FindEmptySpace();
 
-        if (EmptyBox == null)
-        {
+        if (EmptyBox == null)        
             return true;
-        }
-        //Debug.Log($"Empty Space: {EmptyBox.Item1} and {EmptyBox.Item2}");
+                
         for (int i = 1; i < 10; i++)
         {
             if (IsValid(i, EmptyBox))
@@ -95,13 +95,11 @@ public class PuzzleManager : MonoBehaviour
                 for (int j = 0; j < 9; j++)
                 {
                     if (derivedSolution[i, j] != numbersInPuzzle[i, j])
-                    {
-                        Debug.Log("False in Validate");
+                    {                        
                         animationManager.PuzzleNotCompleted();
                         nextAndPrevious.savedValidationState[nextAndPrevious.index] = false;
                         return;
                     }
-
                 }
             }
             Debug.Log("Validated.");
@@ -179,6 +177,4 @@ public class PuzzleManager : MonoBehaviour
         }
         return null;
     }
-
-
 }

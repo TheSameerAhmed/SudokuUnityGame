@@ -9,7 +9,7 @@ using System.IO;
 
 public class NextAndPrevious : MonoBehaviour
 {
-    [SerializeField] CellScript1 cells;
+    [SerializeField] InputController cells;
     [SerializeField] Timer timer;
     [SerializeField] PuzzleManager puzzleManager;
     [SerializeField] TextMeshProUGUI puzzleCountText;
@@ -17,9 +17,14 @@ public class NextAndPrevious : MonoBehaviour
     [SerializeField] GameObject nextPuzzleButton;
     [SerializeField] GameObject previousPuzzleButton;
     [SerializeField] BestTimes bestTimes;
-
+    
+    /// <summary>
+    /// Difficulty level chosen by the user. 1 -> Easy, 2 -> Medium, 3 -> Hard
+    /// </summary>
     public int difficulty { get; set; } // 1 is for easy, 2 for medium, 3 for hard
- 
+    /// <summary>
+    /// Index of the current Puzzle being displayed.
+    /// </summary>
     public int index { get; set; } = 0;
         
     List<int[,]> AllPuzzles = new List<int[,]>();      
@@ -37,8 +42,8 @@ public class NextAndPrevious : MonoBehaviour
     public void DisplayPuzzle()
     {
         if (difficulty == 1)
-        {
-            AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Easy.txt");
+        {            
+            AllPuzzles = DownloadSudokuPuzzles.ParsePuzzles("Easy.txt");     
             difficultyText.text = "Easy";
         }
         else if (difficulty == 2)
@@ -98,7 +103,6 @@ public class NextAndPrevious : MonoBehaviour
             nextPuzzleButton.GetComponent<Button>().enabled = true;
         }
         puzzleCountText.text = $"{index + 1}/{AllPuzzles.Count}";
-        Debug.Log(Path.GetFullPath("Resources"));
     }
 
     public void NextPuzzle()
@@ -133,8 +137,6 @@ public class NextAndPrevious : MonoBehaviour
             UpdatePuzzleCount();
             timer.DisplaySavedTime(latestSavedTimesOfCompletedPuzzles[index]);
             puzzleManager.isValidated = true;
-            
-            return;
         }
         else
         {
@@ -146,7 +148,6 @@ public class NextAndPrevious : MonoBehaviour
             UpdatePuzzleCount();
             puzzleManager.isValidated = false;
         }
-
     }
 
 
@@ -181,9 +182,6 @@ public class NextAndPrevious : MonoBehaviour
             timer.DisplaySavedTime(latestSavedTimesOfCompletedPuzzles[index]);
             bestTimes.LoadStandings(bestTimesSaved[index]);
             puzzleManager.isValidated = true;
-
-            Debug.Log($"{latestSavedTimesOfCompletedPuzzles[index]} time inside the list inside PreviousPuzzle");
-            return;
         }
         else
         {
@@ -202,12 +200,13 @@ public class NextAndPrevious : MonoBehaviour
     {
         modifiedPuzzlesMap[index] = false;
         savedValidationState[index] = false;
+
         latestSavedTimesOfCompletedPuzzles[index] = 0f;
         latestSavedTimes[index] = 0f;
         cells.WipePuzzleForNew();
         puzzleManager.numbersInPuzzle = new int[9, 9];
         savedStatesOfModifiedPuzzles[index] = (int[,]) AllPuzzles[index].Clone();
-        Debug.Log($"{cells.fixedValues.Count} COUNT1");
+
         int n = 0;
         for(int i = 0; i < 9; i++)
         {
@@ -217,9 +216,8 @@ public class NextAndPrevious : MonoBehaviour
                     n++;
             }
         }
-        Debug.Log($"{n} COUNT of 0s");
+
         cells.LoadPuzzle(AllPuzzles[index]);          
-        Debug.Log($"{cells.fixedValues.Count} COUNT2");
         timer.RestartTimer();
     }
 

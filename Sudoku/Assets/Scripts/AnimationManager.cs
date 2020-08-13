@@ -7,7 +7,7 @@ public class AnimationManager : MonoBehaviour
 
     [SerializeField] GameObject puzzleCompleteAnimation;
     [SerializeField] GameObject puzzleInCompleteAnimation;
-    [SerializeField] CellScript1 cells;    
+    [SerializeField] InputController cells;    
 
     public void PuzzleCompleted()
     {
