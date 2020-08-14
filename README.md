@@ -29,6 +29,13 @@
 
 ## ScreenShots from the game
 
+<details>
+  <summary>The title of the image group</summary><details>
+  <img src="/Sudoku/GameScreenShots/MainMenu.jpg" name="MainMenu">
+  <img src="/Sudoku/GameScreenShots/DifficultyLevel.jpg" name="DifficultyLevel">
+  <img src="/Sudoku/GameScreenShots/GameMode.jpg" name="GameMode">
+</details>
+
 
 Main Menu                  |  Difficulty Level
 :-------------------------:|:-------------------------:
