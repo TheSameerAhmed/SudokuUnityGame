@@ -1,5 +1,5 @@
 # Sudoku Game
-
+## [Install Game](https://drive.google.com/file/d/1LzHC1rFJpgXe01hrTVUF-LNOknqQcwjK/view?usp=sharing) (Windows x86 only)
 ## Tools and Languages Used
 
 <img align="left" alt="TheSameerAhmed | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/csharp.svg">
@@ -29,3 +29,7 @@
 
 ## ScreenShots from the game
 
+<img src="/Sudoku/GameScreenShots/MainMenu.jpg" width="470"> <img src="/Sudoku/GameScreenShots/DifficultyLevel.jpg" width ="470">
+<img src="/Sudoku/GameScreenShots/GameMode.jpg" width="470"> <img src="/Sudoku/GameScreenShots/GameModeAfterSolving.jpg" width ="470">
+<img src="/Sudoku/GameScreenShots/NotSolved.jpg" width="470"> <img src="/Sudoku/GameScreenShots/SolvedPuzzle.jpg" width ="470">
+<img src="/Sudoku/GameScreenShots/BestTimes.jpg" width="470"> <img src="/Sudoku/GameScreenShots/GamePaused.jpg" width ="470">
