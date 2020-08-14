@@ -2,9 +2,9 @@
 ## [Install Game](https://drive.google.com/file/d/1LzHC1rFJpgXe01hrTVUF-LNOknqQcwjK/view?usp=sharing) (Windows x86 only)
 ## Tools and Languages Used
 
-<img align="left" alt="TheSameerAhmed | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/csharp.svg">
-<img align="left" alt="TheSameerAhmed | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/unity.svg">
-<img align="left" alt="TheSameerAhmed | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/visualstudio.svg"> <br>
+<img align="left" alt="TheSameerAhmed | LinkedIn" width="30px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/csharp.svg">
+<img align="left" alt="TheSameerAhmed | LinkedIn" width="30px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/unity.svg">
+<img align="left" alt="TheSameerAhmed | LinkedIn" width="30px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/visualstudio.svg"> <br>
 
 ## Features
 
