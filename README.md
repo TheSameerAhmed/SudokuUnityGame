@@ -40,7 +40,7 @@ Game UI                    | Game UI After Puzzle Solved
 
 Puzzle Incorrectly Solved  |  Puzzle Solved
 :-------------------------:|:-------------------------:
-![](/Sudoku/GameScreenShots/NotSolved.jpg)  |  ![](/Sudoku/GameScreenShots/DifficultyLevel.jpg)
+![](/Sudoku/GameScreenShots/NotSolved.jpg)  |  ![](/Sudoku/GameScreenShots/SolvedPuzzle.jpg)
 
 Best Times Recorded        |  Game Paused
 :-------------------------:|:-------------------------:
