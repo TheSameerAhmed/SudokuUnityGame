@@ -13,7 +13,7 @@
 - Solution of each puzzle is derived dynamically using a [backtracking algorithm.](/Sudoku/Assets/Scripts/PuzzleManager.cs)
 - A [.txt parser](/Sudoku/Assets/Scripts/DownloadSudokuPuzzles.cs) that inputs given puzzles into the model of this game from a .txt file of sudoku puzzles.
 - [User control](/Sudoku/Assets/Scripts/InputController.cs) can be handled by both the keyboard and mouse.
-- Includes [Game Audio](/Sudoku/Assets/Scripts/AudioManager.cs) and [Animation](/Sudoku/Assets/Scripts/AnimationManager.cs) to denote events such as after completion of puzzle.
+- Includes [Game Audio](/Sudoku/Assets/Scripts/AudioManager.cs) and [Animation](/Sudoku/Assets/Scripts/AnimationManager.cs) to denote events such as completion of a puzzle.
 
 ## User Interface
 
