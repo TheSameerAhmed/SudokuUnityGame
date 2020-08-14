@@ -29,7 +29,20 @@
 
 ## ScreenShots from the game
 
-<img src="/Sudoku/GameScreenShots/MainMenu.jpg" width="470"> <img src="/Sudoku/GameScreenShots/DifficultyLevel.jpg" width ="470">
-<img src="/Sudoku/GameScreenShots/GameMode.jpg" width="470"> <img src="/Sudoku/GameScreenShots/GameModeAfterSolving.jpg" width ="470">
-<img src="/Sudoku/GameScreenShots/NotSolved.jpg" width="470"> <img src="/Sudoku/GameScreenShots/SolvedPuzzle.jpg" width ="470">
-<img src="/Sudoku/GameScreenShots/BestTimes.jpg" width="470"> <img src="/Sudoku/GameScreenShots/GamePaused.jpg" width ="470">
+
+Main Menu                  |  Difficulty Level
+:-------------------------:|:-------------------------:
+![](/Sudoku/GameScreenShots/MainMenu.jpg)  |  ![](/Sudoku/GameScreenShots/DifficultyLevel.jpg)
+
+Game UI                    | Game UI After Puzzle Solved
+:-------------------------:|:-------------------------:
+![](/Sudoku/GameScreenShots/GameMode.jpg)  |  ![](/Sudoku/GameScreenShots/GameModeAfterSolving.jpg)
+
+Puzzle Incorrectly Solved  |  Puzzle Solved
+:-------------------------:|:-------------------------:
+![](/Sudoku/GameScreenShots/NotSolved.jpg)  |  ![](/Sudoku/GameScreenShots/DifficultyLevel.jpg)
+
+Best Times Recorded        |  Game Paused
+:-------------------------:|:-------------------------:
+![](/Sudoku/GameScreenShots/BestTimes.jpg)  |  ![](/Sudoku/GameScreenShots/GamePaused.jpg)
+
