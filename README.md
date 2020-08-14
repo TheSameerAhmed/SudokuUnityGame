@@ -1,5 +1,11 @@
 # Sudoku Game
 
+## Tools and Languages Used
+
+<img align="left" alt="TheSameerAhmed | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/csharp.svg">
+<img align="left" alt="TheSameerAhmed | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/unity.svg">
+<img align="left" alt="TheSameerAhmed | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@3.4.1/icons/visualstudio.svg"> <br>
+
 ## Features
 
 - 30 puzzle sudoku game with 3 difficulty levels (Easy, Medium and Hard).
@@ -21,6 +27,5 @@
 - Numbers entered can be deleted with the delete, backspace or escape keys on the keyboard.
 - Individual or all puzzles can be reset to the original puzzles.
 
-
-
+## ScreenShots from the game
 
