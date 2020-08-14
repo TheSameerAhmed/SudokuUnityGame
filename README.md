@@ -34,7 +34,7 @@ Main Menu                  |  Difficulty Level
 :-------------------------:|:-------------------------:
 ![](/Sudoku/GameScreenShots/MainMenu.jpg)  |  ![](/Sudoku/GameScreenShots/DifficultyLevel.jpg)
 
-Game UI                    | Game UI After Puzzle Solved
+Game UI                    | Game UI After Puzzle is Solved
 :-------------------------:|:-------------------------:
 ![](/Sudoku/GameScreenShots/GameMode.jpg)  |  ![](/Sudoku/GameScreenShots/GameModeAfterSolving.jpg)
 
